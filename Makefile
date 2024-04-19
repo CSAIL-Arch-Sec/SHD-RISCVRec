@@ -41,10 +41,14 @@ TARGET_LEVEL3 := build/level3
 OBJECTS_LEVEL4 := start.o utils.o level4_asm.o level4.o
 TARGET_LEVEL4 := build/level4
 
+OBJECTS_LEVEL5 := start.o utils.o level5_asm.o level5.o
+TARGET_LEVEL5 := build/level5
+
 BUILD_OBJECTS_LEVEL1 := $(patsubst %,build/%,$(OBJECTS_LEVEL1))
 BUILD_OBJECTS_LEVEL2 := $(patsubst %,build/%,$(OBJECTS_LEVEL2))
 BUILD_OBJECTS_LEVEL3 := $(patsubst %,build/%,$(OBJECTS_LEVEL3))
 BUILD_OBJECTS_LEVEL4 := $(patsubst %,build/%,$(OBJECTS_LEVEL4))
+BUILD_OBJECTS_LEVEL5 := $(patsubst %,build/%,$(OBJECTS_LEVEL5))
 
 ASFLAGS := -g -march=rv32i -mabi=ilp32
 CFLAGS := -g -march=rv32i -mabi=ilp32 -ffreestanding -nostdlib -fno-plt -fno-pic -O0 -c -Iinc
@@ -53,7 +57,7 @@ LDFLAGS2 := -T linker.ld -O0 -static-libgcc -lgcc
 
 .PHONY: all clean
 
-all: $(TARGET_LEVEL1) $(TARGET_LEVEL2) $(TARGET_LEVEL3) $(TARGET_LEVEL4)
+all: $(TARGET_LEVEL1) $(TARGET_LEVEL2) $(TARGET_LEVEL3) $(TARGET_LEVEL4) $(TARGET_LEVEL5)
 
 clean:
 	rm -rf build
@@ -87,3 +91,8 @@ $(TARGET_LEVEL4): $(BUILD_OBJECTS_LEVEL4) linker.ld Makefile
 	@echo " LD    $@"
 	@mkdir -p build
 	@$(LD) $(LDFLAGS1) $(BUILD_OBJECTS_LEVEL4) -o $@ $(LDFLAGS2)
+
+$(TARGET_LEVEL5): $(BUILD_OBJECTS_LEVEL5) linker.ld Makefile
+	@echo " LD    $@"
+	@mkdir -p build
+	@$(LD) $(LDFLAGS1) $(BUILD_OBJECTS_LEVEL5) -o $@ $(LDFLAGS2)
