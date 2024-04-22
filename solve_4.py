@@ -4,7 +4,7 @@ from pwn import *
 
 # You may find using GDB useful here
 # Use the following to launch level 4 while waiting for a GDB connection:
-# io = process(['./run.sh', 'level4', '-debug'])
+# io = process(['./run.sh', 'level4', '--debug'])
 io = process(['./run.sh', 'level4'])
 
 print(io.recvline())
